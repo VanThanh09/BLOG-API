@@ -40,4 +40,6 @@ my_fastapi_project/
 ├── .gitignore	
 ├── requirements.txt	
 ├── README.md	
-└── run.sh	
+└── run.sh
+
+client -> uvicorn  -> fastapi -> router -> dependency injection -> schema -> service -> database -> service -> router -> schema -> response -> client
