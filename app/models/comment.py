@@ -17,4 +17,4 @@ class Comment(Base):
     user = Relationship('User', backref='comments', lazy=True)
 
     blog_id = Column(Integer, ForeignKey('blog.id'))
-    blog = Relationship('blog', backref='comments', lazy=True)
+    blog = Relationship('Blog', backref='comments', lazy=True)

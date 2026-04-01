@@ -12,4 +12,4 @@ class Like(Base):
     blog_id = Column(Integer, ForeignKey('blog.id'), nullable=False)
 
     user = Relationship('User', backref='likes', lazy=True)
-    blog = Relationship('blog', backref='likes', lazy=True)
+    blog = Relationship('Blog', backref='likes', lazy=True)
