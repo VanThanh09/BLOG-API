@@ -1,10 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from app.core.config import settings
 
-SECRECT_KEY = settings.secret_key
+SECRET_KEY = settings.secret_key
 ALGORITHM = "HS256"
 TOKEN_EXPIRES = 30
 
@@ -21,17 +21,19 @@ def verify_password(plain_password: str, hashed_password: str):
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
 
-    expire = datetime.now() + (expires_delta or timedelta(minutes=TOKEN_EXPIRES))
+    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=TOKEN_EXPIRES))
 
     to_encode.update({"exp": expire})
 
-    return jwt.encode(to_encode, SECRECT_KEY, algorithm=ALGORITHM)
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
 #decode JWT
 def decode_token(token: str) -> dict:
     try:
-        payload = jwt.decode(token, SECRECT_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except JWTError:
         return None
+
+print(timedelta(minutes=TOKEN_EXPIRES))

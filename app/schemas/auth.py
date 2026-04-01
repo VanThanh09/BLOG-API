@@ -9,7 +9,7 @@ class UserLogin(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
-    token_expires: int
+    token_expires: float
 
 
 class TokenData(BaseModel):
