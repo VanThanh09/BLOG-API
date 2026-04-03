@@ -2,11 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.security import create_access_token, TOKEN_EXPIRES
-from app.dependencies import get_db, get_current_user
-from app.schemas.auth_schema import Token, UserLogin
-from app.schemas.user_schema import UserResponse, UserCreate, UserUpdate
-from app.services import user_service
-from app.services.user_service import create_user, update_user
+from app.api.deps import get_db, get_current_user
+from app.schemas import Token, UserLogin, UserResponse, UserCreate, UserUpdate
+from app.crud import create_user, update_user, authenticate_user
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -22,7 +20,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/token", response_model=Token)
 def login(data: UserLogin, db: Session = Depends(get_db)):
-    user = user_service.authenticate_user(db, data.email, data.password)
+    user = authenticate_user(db, data.email, data.password)
 
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")

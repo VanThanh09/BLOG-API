@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.dependencies import get_db, get_current_user
-from app.schemas.blog_schema import Blog, BlogPost
-from app.services.blog_service import create_blog_service, blog_list_service
+from app.api.deps import get_db, get_current_user
+from app.schemas import Blog, BlogPost
+from app.crud import create_blog_service, blog_list_service
 
 router = APIRouter(prefix="/blogs", tags=["blogs"])
 
