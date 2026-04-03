@@ -4,5 +4,6 @@ from app.models.blog import Blog
 from app.models.notification import Notification
 from app.models.like import Like
 from app.models.comment import Comment
+from app.models.blog_image import BlogImage
 
-__all__ = ['User', 'Blog', 'Comment', 'Follow', 'Like', 'Notification']
+__all__ = ['User', 'Blog', 'Comment', 'Follow', 'Like', 'Notification', "BlogImage"]

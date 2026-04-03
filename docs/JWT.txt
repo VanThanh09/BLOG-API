@@ -1,5 +1,5 @@
 1. Cấu hình security
- - Tạo SECRECT_KEY (tự tạo), ALGORITHM (thuật toán mã hóa), TOKEN_EXPIRE
+ - Tạo SECRECT_KEY, ALGORITHM, TOKEN_EXPIRE
  - Hash and verify passowrd
  - Encode - Decode token
 

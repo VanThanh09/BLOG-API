@@ -14,7 +14,7 @@ def get_db():
     finally:
         db.close()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login") # get token from header
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token") # get token from header
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
     payload = decode_token(token)
@@ -22,9 +22,9 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     if payload is None:
         raise HTTPException(status_code=401, detail="Invalid token - Login again")
 
-    user_id = payload.get("sub")
+    user_email = payload.get("sub")
 
-    user = db.query(User).filter(User.id == user_id).first()
+    user = db.query(User).filter(User.email == user_email).first()
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

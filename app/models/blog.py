@@ -11,8 +11,8 @@ class Blog(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=True)
-    content = Column(Text, nullable=True)
-    is_published = Column(Boolean, default=True)
+    content = Column(Text, nullable=False)
+    is_published = Column(Boolean, default=True, nullable=False)
     created_at = Column(DateTime, default=datetime.now)
 
     author = Relationship('User', backref='blogs', lazy=True)

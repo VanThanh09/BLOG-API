@@ -4,7 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 class Settings(BaseSettings):
-    app_name: str = "EXPENSE-TRACKER"
+    app_name: str = "BLOG-API"
     database_url: str
     secret_key: str
 
