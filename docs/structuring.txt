@@ -2,36 +2,40 @@ Structuring a FastAPI Project:
 my_fastapi_project/	
 ├── app/	
 │   ├── __init__.py
+│   ├── api/
+│   │   ├── router/	        #Handels API endpoints (request - response)
+│   │   │   ├── __init__.py
+│   │   │   └── user_router.py
+│   │   │   └── item_router.py
+│   │   ├── __init__.py
+│   │   ├── deps.py         #Contains shared dependencies like database sessions
+│   │   └── main.py         #Registers and includes API routers
+│   ├── core/
+│   │   ├── __init__.py	
+│   │   ├── database.py     #Database connection and session setup
+│   │   ├── security.py     #Security logic (hashing, JWT, auth)
+│   │   └── config.py       #App configuration (env variables, settings)
+│   ├── email-templates/
+│   │   ├── build/          #Compiled HTML email template
+│   │   │   └── mail.html
+│   │   ├── src/
+│   │   │   └── mail.mjml   #Source email template (MJML format)
+│   ├── worker/
+│   │   ├── __init__.py	
+│   │   ├── celery_app.py   #Celery configuration (queue, broker)
+│   │   └── tasks.py        #Background tasks (e.g., send email)
+│   ├── alembic/            #Alembic config
+│   │   ├── versions/
+│   │   ├── env.py
+│   │   ├── README
+│   │   └── script.py.mako
 │   ├── main.py             #The entry point of the FastAPI application
-│   ├── dependencies.py	    #Contains shared dependencies like database sessions
-│   ├── routers/	        #Handels API endpoints (request - response)
-│   │   ├── __init__.py	
-│   │   ├── users.py
-│   │   └── items.py	
-│   ├── internal/	        #Contains internal, non-public endpoints (admin panel,...)
-│   │   ├── __init__.py	
-│   │   └── admin.py	
-│   ├── core/	            #Holds configurations and security setting
-│   │   ├── __init__.py	
-│   │   ├── config.py	
-│   │   └── security.py	
-│   ├── models/	            #SQLAlchemy models
-│   │   ├── __init__.py	
-│   │   ├── user.py	
-│   │   └── item.py	
-│   ├── schemas/	        #Pydantic models (validate data)
-│   │   ├── __init__.py	
-│   │   ├── user.py	
-│   │   └── item.py	
-│   ├── services/	        #Contains business logic (hash password, check exist user, ...)
-│   │   ├── __init__.py	
-│   │   ├── user_service.py	
-│   │   └── item_service.py	
-│   └── db/	                #Connect database (engine, sessionLocal, dependency get_db())
-│       ├── __init__.py	
-│       ├── database.py	
-│       └── migrations/	    #Manage version database (update schema, rollback)
-├── tests/	
+│   ├── models.py           #SQLAlchemy models
+│   ├── crud.py             #Database operations (create, read, update, delete)
+│   ├── schemas.py          #Pydantic schemas (data validation)
+│   ├── utils.py            #Utility/helper functions
+│   └── __init__.py
+├── tests/
 │   ├── __init__.py	
 │   ├── test_main.py	
 │   ├── test_users.py	

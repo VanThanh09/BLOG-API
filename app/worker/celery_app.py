@@ -1,6 +1,8 @@
 from celery import Celery
 
-celery = Celery('worker', broker="redis://localhost:6379/0")
+from app.core.config import settings
+
+celery = Celery('worker', broker=settings.redis_host)
 
 from app.worker import tasks
 

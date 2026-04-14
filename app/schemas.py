@@ -51,6 +51,7 @@ class UserResponse(BaseModel):
     email: str
     is_active: bool
     avatar: str
+    is_superuser: bool
 
     class Config:
         from_attributes = True
@@ -67,11 +68,29 @@ class Image(BaseModel):
 
 
 class BlogList(BaseModel):
+    id: int
     title: Optional[str] = None
     content: str
     created_at: datetime
     author: Author
     images: Optional[List[Image]] = None
+
+    class Config:
+        from_attributes = True
+
+
+class Pagination(BaseModel):
+    page: int
+    page_size: int
+    total_items: int
+    total_pages: int
+    has_next: bool
+    has_prev: bool
+
+
+class BlogListResponse(BaseModel):
+    data: List[BlogList]
+    pagination: Pagination
 
     class Config:
         from_attributes = True

@@ -57,6 +57,10 @@ def update_user(user: User, update_data, db: Session):
     return user
 
 
+def get_user_by_email(db: Session, email: str) -> User:
+    return db.query(User).filter(User.email == email).one_or_none()
+
+
 # -------------------------------blog-------------------------------
 BLOG_PAGE_SIZE = 2
 
@@ -103,3 +107,11 @@ def blog_list_service(db: Session, page: int = 1):
         "data": blogs,
         "pagination": pagination,
     }
+
+def blog_detail_service(db: Session, blog_id: int):
+    blog = db.query(Blog).filter(Blog.id == blog_id).one_or_none()
+
+    return blog
+
+def update_blog_service(db: Session, blog_data):
+    pass

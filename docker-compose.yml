@@ -1,0 +1,49 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: my_database
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    command: >
+      bash -c "
+        echo '🚀 Starting Auth Service in Development Mode...' &&
+        uvicorn app.main:app --host 0.0.0.0 --port 8081 --reload
+      "
+    volumes:
+      - .:/app
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:root_password@db/my_database
+      - REDIS_HOST=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+
+  worker:
+    build: .
+    command: celery -A app.worker.celery_app worker --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:root_password@db/my_database
+      - REDIS_HOST=redis://redis:6379/0
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  mysql_data:

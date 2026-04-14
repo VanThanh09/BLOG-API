@@ -1,6 +1,9 @@
 from pathlib import Path
 from typing import Any
 from jinja2 import Template
+from fastapi import UploadFile
+import cloudinary.uploader
+
 
 BASE_DIR = Path(__file__).parent / "email-templates" / "build"
 
@@ -11,3 +14,14 @@ def render_email_template(*, template_name: str, context: dict[str, Any]) -> str
     html_content = Template(template_str).render(context)
 
     return html_content
+
+
+async def upload_file(file: UploadFile):
+    try:
+        result = cloudinary.uploader.upload(file.file, folder="blogs")
+        return {
+            "url": result["secure_url"],
+            "public_id": result["public_id"]
+        }
+    except Exception as e:
+        return {"error": str(e)}

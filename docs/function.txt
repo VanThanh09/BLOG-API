@@ -1,6 +1,35 @@
-1. Đăng nhập / đăng ký
-2. Xem profile / chỉnh sửa
-3. Post bài (crud)
-4. Comment
+1. User
+    Đăng ký / đăng nhập (JWT hoặc session)
+    Xem profile user
+    Cập nhật thông tin:
+        name
+        avatar
+        đổi mật khẩu
+    Active / deactivate user (admin)
+2. Blog
+    Tạo bài viết
+    Sửa bài viết (chỉ author)
+    Xoá bài viết
+    Xem danh sách blog
+    Xem chi tiết blog
+    Publish / unpublish
+3. Comment
+    Comment blog
+    Sửa comment (optional)
+    Xoá comment
+    Lấy danh sách comment theo blog
 5. Like
-6. Notification (r)
+    Like / Unlike blog
+    Đếm số like
+6. Follow
+    Follow user
+    Unfollow user
+    Xem danh sách:
+        Người mình follow
+        Người follow mình
+7. Notification
+    Nhận thông báo khi:
+        Có người follow mình
+        Có người like blog
+    Có người comment blog
+    Đánh dấu đã đọc
